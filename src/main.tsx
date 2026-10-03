@@ -37,7 +37,7 @@ function App() {
   const [band, setBand] = useState("All bands");
   const [tab, setTab] = useState<View>("lightcurve");
 
-  useEffect(() => { fetch("/sample-data.json").then((response) => response.json()).then(setDataset).catch(() => setDataset({ observations: [] })); }, []);
+  useEffect(() => { fetch(`${import.meta.env.BASE_URL}sample-data.json`).then((response) => response.json()).then(setDataset).catch(() => setDataset({ observations: [] })); }, []);
   const observation = dataset?.observations[day];
   const curves = useMemo(() => observation?.lightcurves.filter((curve) => (instrument === "All" || curve.instrument === instrument) && (band === "All bands" || curve.id === band)) ?? [], [observation, instrument, band]);
   const spectra = useMemo(() => observation?.spectra.filter((spectrum) => instrument === "All" || spectrum.instrument === instrument) ?? [], [observation, instrument]);
